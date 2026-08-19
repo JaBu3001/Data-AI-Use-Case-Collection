@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}KI Use Case Sammlung{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-head">
+  <a class="brand" href="{{ url_for('index') }}">KI&nbsp;Use&nbsp;Case&nbsp;Sammlung</a>
+  <span class="brand-sub">lokale Kopie · persönlicher Gebrauch</span>
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer class="site-foot">
+  Daten gescrapt von <a href="https://casebase.ai/de/ai-use-case-collection/" target="_blank" rel="noopener">casebase.ai</a>
+  – alle Inhalte und Rechte liegen bei Casebase. Lokale Kopie ausschließlich für den privaten Gebrauch.
+</footer>
+</body>
+</html>

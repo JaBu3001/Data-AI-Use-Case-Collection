@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<form class="layout" method="get" id="filterform">
+  <aside class="filters">
+    <div class="search">
+      <input type="search" name="q" value="{{ q }}" placeholder="Volltextsuche …">
+      <button type="submit">Suchen</button>
+    </div>
+    {% if q or active.values()|map('length')|sum %}
+      <a class="reset" href="{{ url_for('index') }}">✕ Filter zurücksetzen</a>
+    {% endif %}
+    {% for ttype, facet in facets.items() %}
+      <details class="facet" {% if active[ttype] %}open{% endif %}>
+        <summary>{{ facet.label }} <span class="count">{{ facet['items']|length }}</span></summary>
+        <ul>
+        {% for item in facet['items'] %}
+          <li>
+            <label>
+              <input type="checkbox" name="{{ ttype }}" value="{{ item['name'] }}"
+                     {% if item['name'] in active[ttype] %}checked{% endif %}
+                     onchange="document.getElementById('filterform').submit()">
+              <span>{{ item['name'] }}</span><span class="count">{{ item['n'] }}</span>
+            </label>
+          </li>
+        {% endfor %}
+        </ul>
+      </details>
+    {% endfor %}
+  </aside>
+
+  <section class="results">
+    <p class="resultcount">{{ cases|length }} von {{ total }} Use Cases</p>
+    <div class="grid">
+      {% for c in cases %}
+      <a class="card" href="{{ url_for('detail', post_id=c.row['post_id']) }}">
+        <div class="thumb">
+          {% if c.row['image_file'] %}
+            <img src="{{ url_for('static', filename='img/' ~ c.row['image_file']) }}" alt="" loading="lazy">
+          {% elif c.row['image_url'] %}
+            <img src="{{ c.row['image_url'] }}" alt="" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="card-body">
+          <h3>{{ c.row['title'] }}</h3>
+          <div class="tags">
+            {% for ttype, name in c.tags if ttype in ('family','domain','process','risk') %}
+              <span class="tag tag--{{ ttype }}">{{ name }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </a>
+      {% else %}
+      <p class="empty">Keine Treffer. <a href="{{ url_for('index') }}">Filter zurücksetzen</a></p>
+      {% endfor %}
+    </div>
+  </section>
+</form>
+{% endblock %}

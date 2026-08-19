@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{{ uc['title'] }}{% endblock %}
+{% block content %}
+<article class="detail">
+  <a class="back" href="{{ url_for('index') }}">← Zur Übersicht</a>
+  <div class="hero">
+    {% if uc['image_file'] %}
+      <img src="{{ url_for('static', filename='img/' ~ uc['image_file']) }}" alt="">
+    {% elif uc['image_url'] %}<img src="{{ uc['image_url'] }}" alt="">{% endif %}
+    <h1>{{ uc['title'] }}</h1>
+  </div>
+
+  <div class="meta-boxes">
+    {% for ttype in ('family','domain','process') %}
+      {% if grouped[ttype] %}
+      <div class="box">
+        <h2>{{ tag_labels[ttype] }}</h2>
+        <div class="tags">{% for n in grouped[ttype] %}<span class="tag tag--{{ ttype }}">{{ n }}</span>{% endfor %}</div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if uc['challenge'] %}<section class="box wide"><h2>Herausforderung</h2><div class="rich">{{ uc['challenge']|safe }}</div></section>{% endif %}
+  {% if uc['solution'] %}<section class="box wide"><h2>Lösung</h2><div class="rich">{{ uc['solution']|safe }}</div></section>{% endif %}
+  {% if uc['benefits'] %}<section class="box wide"><h2>Mehrwert</h2><div class="rich">{{ uc['benefits']|safe }}</div></section>{% endif %}
+
+  <div class="meta-boxes two">
+    {% for ttype in ('target','industry') %}
+      {% if grouped[ttype] %}
+      <div class="box">
+        <h2>{{ tag_labels[ttype] }}</h2>
+        <div class="tags">{% for n in grouped[ttype] %}<span class="tag tag--{{ ttype }}">{{ n }}</span>{% endfor %}</div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if uc['risk_class'] %}
+  <section class="box wide risk">
+    <h2>Risikoklassifizierung (EU KI-Verordnung)</h2>
+    <p><strong>{{ uc['risk_class'] }}</strong>
+       {% if uc['risk_reference'] %}<span class="muted">· {{ uc['risk_reference'] }}</span>{% endif %}</p>
+    {% if uc['risk_obligation'] %}<p>{{ uc['risk_obligation'] }}</p>{% endif %}
+    <p class="muted small">Angaben ohne Gewähr – Einstufung ist immer fallspezifisch (Risikologik von Casebase).</p>
+  </section>
+  {% endif %}
+
+  {% if related %}
+  <section class="wide">
+    <h2>Ähnliche Use Cases</h2>
+    <div class="grid">
+      {% for r in related %}
+      <a class="card" href="{{ url_for('detail', post_id=r['post_id']) }}">
+        <div class="thumb">
+          {% if r['image_file'] %}<img src="{{ url_for('static', filename='img/' ~ r['image_file']) }}" alt="" loading="lazy">
+          {% elif r['image_url'] %}<img src="{{ r['image_url'] }}" alt="" loading="lazy">{% endif %}
+        </div>
+        <div class="card-body"><h3>{{ r['title'] }}</h3></div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <p class="source">Quelle dieses Datensatzes:
+    <a href="{{ uc['url'] }}" target="_blank" rel="noopener">{{ uc['url'] }}</a>
+    {% if uc['source_name'] %} · Originalquelle:
+      {% if uc['source_url'] %}<a href="{{ uc['source_url'] }}" target="_blank" rel="noopener">{{ uc['source_name'] }}</a>
+      {% else %}{{ uc['source_name'] }}{% endif %}
+    {% endif %}
+    <span class="muted">· gescrapt am {{ uc['scraped_at'][:10] }}</span>
+  </p>
+</article>
+{% endblock %}

@@ -1,0 +1,77 @@
+:root{
+  --bg:#f6f7f9; --panel:#fff; --ink:#12181f; --muted:#65707c; --line:#e3e7ec;
+  --accent:#1f5fd6; --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#11151a; --panel:#181e25; --ink:#e8ecf1; --muted:#96a1ad; --line:#2a333d; --accent:#6fa2ff; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:inherit}
+main{max-width:1280px;margin:0 auto;padding:24px 20px 60px}
+
+.site-head{display:flex;align-items:baseline;gap:12px;padding:14px 20px;
+  background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.brand{font-weight:700;text-decoration:none;letter-spacing:-.01em}
+.brand-sub{color:var(--muted);font-size:12px}
+.site-foot{border-top:1px solid var(--line);padding:20px;color:var(--muted);font-size:12px;text-align:center}
+
+.layout{display:grid;grid-template-columns:270px 1fr;gap:24px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:1fr}}
+
+.filters{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px;position:sticky;top:64px;max-height:calc(100vh - 90px);overflow:auto}
+.search{display:flex;gap:6px;margin-bottom:10px}
+.search input{flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;
+  background:var(--bg);color:var(--ink)}
+.search button{padding:8px 12px;border:0;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer}
+.reset{display:inline-block;margin-bottom:10px;font-size:12px;color:var(--accent)}
+.facet{border-top:1px solid var(--line);padding:8px 0}
+.facet summary{cursor:pointer;font-weight:600;font-size:13px;list-style:none}
+.facet summary::-webkit-details-marker{display:none}
+.facet summary::before{content:"▸";display:inline-block;width:14px;color:var(--muted)}
+.facet[open] summary::before{content:"▾"}
+.facet ul{list-style:none;margin:8px 0 0;padding:0;max-height:260px;overflow:auto}
+.facet label{display:flex;gap:6px;align-items:center;font-size:13px;padding:2px 0;cursor:pointer}
+.facet label span:nth-of-type(1){flex:1}
+.count{color:var(--muted);font-size:11px}
+
+.resultcount{color:var(--muted);font-size:13px;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;text-decoration:none;transition:.15s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.thumb{aspect-ratio:16/9;background:var(--line)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.card-body{padding:12px}
+.card h3{margin:0 0 8px;font-size:15px;line-height:1.3}
+.empty{color:var(--muted)}
+
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.tag--family{background:rgba(31,95,214,.12);color:#2f6fe0;border-color:transparent}
+.tag--domain{background:rgba(16,163,127,.14);color:#0e9b78;border-color:transparent}
+.tag--process{background:rgba(180,120,20,.14);color:#b07b17;border-color:transparent}
+.tag--risk{background:rgba(200,60,60,.12);color:#c94b4b;border-color:transparent}
+.tag--target,.tag--industry{background:var(--bg)}
+
+.detail{max-width:960px;margin:0 auto}
+.back{display:inline-block;margin-bottom:14px;color:var(--accent);text-decoration:none;font-size:13px}
+.hero{position:relative;border-radius:var(--radius);overflow:hidden;margin-bottom:20px;background:var(--line)}
+.hero img{width:100%;height:280px;object-fit:cover;display:block;filter:brightness(.6)}
+.hero h1{position:absolute;left:24px;right:24px;bottom:20px;margin:0;color:#fff;font-size:28px;
+  text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.meta-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.meta-boxes.two{grid-template-columns:repeat(2,1fr)}
+@media (max-width:760px){.meta-boxes,.meta-boxes.two{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.box h2{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.wide{margin-bottom:18px}
+.rich p{margin:0 0 10px}
+.rich ul{margin:0;padding-left:20px}
+.rich li{margin-bottom:6px}
+.risk p{margin:0 0 6px}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.source{font-size:12px;color:var(--muted);margin-top:24px;word-break:break-word}
