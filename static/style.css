@@ -75,3 +75,37 @@ main{max-width:1280px;margin:0 auto;padding:24px 20px 60px}
 .muted{color:var(--muted)}
 .small{font-size:12px}
 .source{font-size:12px;color:var(--muted);margin-top:24px;word-break:break-word}
+
+/* --- Bearbeiten / Anlegen / Löschen --- */
+.head-action{margin-left:auto}
+.btn{display:inline-block;padding:7px 14px;border-radius:8px;border:1px solid var(--line);
+  background:var(--panel);color:var(--text);font-size:13px;text-decoration:none;cursor:pointer;
+  font-family:inherit;line-height:1.4}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn--primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn--primary:hover{filter:brightness(1.08);color:#fff}
+.btn--danger{color:#c94b4b}
+.btn--danger:hover{background:#c94b4b;border-color:#c94b4b;color:#fff}
+
+.flashes{max-width:960px;margin:16px auto 0;padding:0 20px}
+.flash{margin:0 0 8px;padding:10px 14px;border-radius:var(--radius);font-size:14px;
+  border:1px solid var(--line);background:var(--panel)}
+.flash--ok{border-color:rgba(16,163,127,.5);background:rgba(16,163,127,.1)}
+.flash--error{border-color:rgba(200,60,60,.5);background:rgba(200,60,60,.1)}
+
+.detailbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.detailbar .back{margin-bottom:0}
+.detailbar-actions{display:flex;gap:8px;align-items:center}
+.detailbar-actions form{margin:0}
+
+.ucform label{display:block;margin-bottom:14px;font-size:13px;color:var(--muted)}
+.ucform label:last-child{margin-bottom:0}
+.ucform input[type=text],.ucform input[type=url],.ucform input[type=file],.ucform textarea{
+  display:block;width:100%;margin-top:5px;padding:9px 11px;border:1px solid var(--line);
+  border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px;
+  box-sizing:border-box}
+.ucform textarea{resize:vertical;line-height:1.5}
+.ucform input:focus,.ucform textarea:focus{outline:none;border-color:var(--accent)}
+.ucform .req{color:#c94b4b}
+.ucform .preview{max-width:260px;border-radius:8px;display:block;margin-bottom:12px}
+.formactions{display:flex;gap:10px;align-items:center;margin:20px 0 40px}

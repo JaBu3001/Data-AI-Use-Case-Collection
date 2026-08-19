@@ -44,3 +44,21 @@ sqlite3 data/casebase.db "SELECT t.name, COUNT(*) FROM tags t JOIN use_case_tags
 ```
 
 Bilder liegen lokal unter `static/img/<post_id>.jpg`, die Seite funktioniert damit offline.
+
+## Use Cases pflegen
+
+Die Web-Oberfläche kann Use Cases anlegen, bearbeiten und löschen – die Änderungen
+landen direkt in `data/casebase.db`.
+
+- **Anlegen:** Button „+ Neuer Use Case“ in der Kopfzeile. Eigene Einträge bekommen
+  IDs ab 900000, kollidieren also nie mit den gescrapten Datensätzen.
+- **Bearbeiten / Löschen:** Buttons oben auf der Detailseite. Löschen fragt vorher nach
+  und entfernt auch die Tag-Verknüpfungen sowie danach ungenutzte Tags.
+- **Kategorien:** kommagetrennt eintragen; die Eingabefelder schlagen bestehende Werte vor,
+  neue Werte tauchen automatisch in den Filtern der Übersicht auf.
+- **Bilder:** Upload landet als `static/img/<post_id>.<ext>`, alternativ eine Bild-URL angeben.
+  Beim Löschen werden nur selbst hochgeladene Bilder (ID ≥ 900000) mit entfernt.
+
+Hinweis: `python scrape.py` überschreibt gescrapte Datensätze – eigene Einträge
+(ID ≥ 900000) bleiben davon unberührt. Vor größeren Aktionen lohnt sich eine Kopie
+von `data/casebase.db`.

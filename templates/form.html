@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ "Neuer Use Case" if mode == "new" else "Bearbeiten: " ~ data['title'] }}{% endblock %}
+{% block content %}
+<article class="detail">
+  <a class="back" href="{{ url_for('detail', post_id=post_id) if mode == 'edit' else url_for('index') }}">← Zurück</a>
+  <h1>{{ "Neuen Use Case anlegen" if mode == "new" else "Use Case bearbeiten" }}</h1>
+
+  <form class="ucform" method="post" enctype="multipart/form-data"
+        action="{{ url_for('edit', post_id=post_id) if mode == 'edit' else url_for('create') }}">
+    <section class="box wide">
+      <label>Titel <span class="req">*</span>
+        <input type="text" name="title" required value="{{ data['title'] if data else '' }}">
+      </label>
+      <label>Herausforderung
+        <textarea name="challenge" rows="6">{{ data['challenge'] if data else '' }}</textarea>
+      </label>
+      <label>Lösung
+        <textarea name="solution" rows="6">{{ data['solution'] if data else '' }}</textarea>
+      </label>
+      <label>Mehrwert
+        <textarea name="benefits" rows="6">{{ data['benefits'] if data else '' }}</textarea>
+      </label>
+      <p class="muted small">Leerzeile = neuer Absatz. Zeilen mit „- “ bleiben so erhalten; eigenes HTML wird übernommen.</p>
+    </section>
+
+    <section class="box wide">
+      <h2>Kategorien</h2>
+      <p class="muted small">Mehrere Werte mit Komma trennen. Vorschläge stammen aus vorhandenen Use Cases.</p>
+      {% for ttype, label in tag_labels.items() %}
+      <label>{{ label }}
+        <input type="text" name="tag_{{ ttype }}" list="dl-{{ ttype }}"
+               value="{{ tags[ttype]|join(', ') }}">
+      </label>
+      <datalist id="dl-{{ ttype }}">
+        {% for name in suggestions[ttype] %}<option value="{{ name }}">{% endfor %}
+      </datalist>
+      {% endfor %}
+    </section>
+
+    <section class="box wide">
+      <h2>Bild</h2>
+      {% if data and data['image_file'] %}
+        <img class="preview" src="{{ url_for('static', filename='img/' ~ data['image_file']) }}" alt="">
+      {% endif %}
+      <label>Bild hochladen (ersetzt vorhandenes)
+        <input type="file" name="image" accept="image/*">
+      </label>
+      <label>oder Bild-URL
+        <input type="url" name="image_url" value="{{ data['image_url'] if data and data['image_url'] else '' }}">
+      </label>
+    </section>
+
+    <section class="box wide">
+      <h2>Risikoklassifizierung (EU KI-Verordnung)</h2>
+      <label>Risikoklasse
+        <input type="text" name="risk_class" list="dl-risk"
+               value="{{ data['risk_class'] if data and data['risk_class'] else '' }}">
+      </label>
+      <label>Referenz
+        <input type="text" name="risk_reference"
+               value="{{ data['risk_reference'] if data and data['risk_reference'] else '' }}">
+      </label>
+      <label>Pflichten
+        <textarea name="risk_obligation" rows="3">{{ data['risk_obligation'] if data and data['risk_obligation'] else '' }}</textarea>
+      </label>
+    </section>
+
+    <section class="box wide">
+      <h2>Quelle</h2>
+      <label>Link zum Datensatz
+        <input type="url" name="url" value="{{ data['url'] if data and data['url'] else '' }}">
+      </label>
+      <label>Originalquelle (Name)
+        <input type="text" name="source_name" value="{{ data['source_name'] if data and data['source_name'] else '' }}">
+      </label>
+      <label>Originalquelle (URL)
+        <input type="url" name="source_url" value="{{ data['source_url'] if data and data['source_url'] else '' }}">
+      </label>
+    </section>
+
+    <div class="formactions">
+      <button class="btn btn--primary" type="submit">Speichern</button>
+      <a class="btn" href="{{ url_for('detail', post_id=post_id) if mode == 'edit' else url_for('index') }}">Abbrechen</a>
+    </div>
+  </form>
+</article>
+{% endblock %}

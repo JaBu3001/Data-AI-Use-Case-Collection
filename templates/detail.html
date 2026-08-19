@@ -2,7 +2,16 @@
 {% block title %}{{ uc['title'] }}{% endblock %}
 {% block content %}
 <article class="detail">
-  <a class="back" href="{{ url_for('index') }}">← Zur Übersicht</a>
+  <div class="detailbar">
+    <a class="back" href="{{ url_for('index') }}">← Zur Übersicht</a>
+    <span class="detailbar-actions">
+      <a class="btn" href="{{ url_for('edit', post_id=uc['post_id']) }}">Bearbeiten</a>
+      <form method="post" action="{{ url_for('delete', post_id=uc['post_id']) }}"
+            onsubmit="return confirm('„{{ uc['title']|e }}“ wirklich löschen? Das lässt sich nicht rückgängig machen.')">
+        <button class="btn btn--danger" type="submit">Löschen</button>
+      </form>
+    </span>
+  </div>
   <div class="hero">
     {% if uc['image_file'] %}
       <img src="{{ url_for('static', filename='img/' ~ uc['image_file']) }}" alt="">
@@ -63,13 +72,14 @@
   </section>
   {% endif %}
 
-  <p class="source">Quelle dieses Datensatzes:
-    <a href="{{ uc['url'] }}" target="_blank" rel="noopener">{{ uc['url'] }}</a>
+  <p class="source">
+    {% if uc['url'] %}Quelle dieses Datensatzes:
+    <a href="{{ uc['url'] }}" target="_blank" rel="noopener">{{ uc['url'] }}</a>{% endif %}
     {% if uc['source_name'] %} · Originalquelle:
       {% if uc['source_url'] %}<a href="{{ uc['source_url'] }}" target="_blank" rel="noopener">{{ uc['source_name'] }}</a>
       {% else %}{{ uc['source_name'] }}{% endif %}
     {% endif %}
-    <span class="muted">· gescrapt am {{ uc['scraped_at'][:10] }}</span>
+    <span class="muted">· Stand {{ uc['scraped_at'][:10] }}</span>
   </p>
 </article>
 {% endblock %}
